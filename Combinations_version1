@@ -1,0 +1,28 @@
+class Solution {
+public:
+    /**
+     * @param n: Given the range of numbers
+     * @param k: Given the numbers of combinations
+     * @return: All the combinations of k numbers out of 1..n
+     */
+     
+    void combinationHelper(int n, int k, int start, vector<vector<int> > &result, vector<int> solution) {
+        if(solution.size() == k){
+            result.push_back(solution);
+            return;
+        }
+        for(int i = start; i<=n; ++i)
+        {
+            solution.push_back(i);
+            combinationHelper(n, k, i+1, result, solution);
+            solution.pop_back();
+        }
+    }
+    vector<vector<int> > combine(int n, int k) {
+        // write your code here
+        vector<vector<int> > result;
+        vector<int> solution;
+        combinationHelper(n, k, 1, result, solution);
+        return result;
+    }
+};
