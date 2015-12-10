@@ -1,0 +1,55 @@
+/**
+ * Definition for Directed graph.
+ * struct DirectedGraphNode {
+ *     int label;
+ *     vector<DirectedGraphNode *> neighbors;
+ *     DirectedGraphNode(int x) : label(x) {};
+ * };
+ */
+class Solution {
+public:
+    /**
+     * @param graph: A list of Directed graph node
+     * @return: Any topological order for the given graph.
+     */
+    vector<DirectedGraphNode*> topSort(vector<DirectedGraphNode*> graph) {
+        // write your code here
+        vector<DirectedGraphNode *> result;
+        if(graph.size() == 0) {
+            return result;
+        }
+        
+        map<DirectedGraphNode *, int> indegree;
+        for(int i = 0; i < graph.size(); ++i) {
+            for(int j = 0; j < graph[i]->neighbors.size(); ++j) {
+                if(indegree.find(graph[i]->neighbors[j]) == indegree.end()) {
+                    indegree[graph[i]->neighbors[j]] = 1;
+                }
+                else {
+                    indegree[graph[i]->neighbors[j]] += 1;
+                }  
+            }
+        }
+        
+        queue<DirectedGraphNode *> helpQueue;
+        for(int i = 0; i < graph.size(); ++i) {
+            if(indegree.find(graph[i]) == indegree.end()) {
+                helpQueue.push(graph[i]);
+            }
+        }
+        
+        while(!helpQueue.empty()) {
+            DirectedGraphNode * temp = helpQueue.front();
+            result.push_back(temp);
+            for(int i = 0; i < temp->neighbors.size(); ++i) {
+                indegree[temp->neighbors[i]]--;
+                if(indegree[temp->neighbors[i]] == 0) {
+                    helpQueue.push(temp->neighbors[i]);
+                }
+            }
+            helpQueue.pop();
+        }
+        
+        return result;
+    }
+};
