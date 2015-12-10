@@ -1,0 +1,39 @@
+class Solution {
+    
+    void combine(vector<int> &candidates, vector<int> &solution, int target, int pos, vector<vector<int> > &result ) {
+        if(target == 0) {
+            result.push_back(solution);
+            return;
+        }
+        
+        int prev = -1;
+        for(int i = pos; i < candidates.size(); ++i) {
+            if(candidates[i] > target) {
+                break;
+            }   
+            
+            solution.push_back(candidates[i]);
+            combine(candidates, solution, target - candidates[i], i, result);
+            solution.pop_back();
+            prev = candidates[i];
+        }
+    }
+    
+public:
+    /**
+     * @param candidates: A list of integers
+     * @param target:An integer
+     * @return: A list of lists of integers
+     */
+    vector<vector<int> > combinationSum(vector<int> &candidates, int target) {
+        // write your code here
+        vector<vector<int> > result;
+        if(candidates.size() == 0) {
+            return result;
+        }
+        sort(candidates.begin(), candidates.end());
+        vector<int> solution;
+        combine(candidates, solution, target, 0, result);
+        return result;
+    }
+};
