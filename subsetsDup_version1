@@ -1,0 +1,31 @@
+class Solution {
+    void subsetsWithDupHelper(vector<int> &nums, vector<vector<int> > &result, vector<int> &solution, int pos) {
+        result.push_back(solution);
+        for(int i = pos; i < nums.size(); ++i) {
+            if( i != pos && nums[i] == nums[i-1]) {
+                continue;
+            }
+            solution.push_back(nums[i]);
+            subsetsWithDupHelper(nums, result, solution, i+1);
+            solution.pop_back();
+        }
+    }
+public:
+    /**
+     * @param S: A set of numbers.
+     * @return: A list of lists. All valid subsets.
+     */
+    vector<vector<int> > subsetsWithDup(const vector<int> &S) {
+        // write your code here
+        vector<vector<int> > result;
+        if(S.size() == 0) {
+            return result;
+        }
+        
+        vector<int> nums = S;
+        sort(nums.begin(), nums.end());
+        vector<int> solution;
+        subsetsWithDupHelper(nums, result, solution, 0);
+        return result;
+    }
+};
