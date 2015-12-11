@@ -1,0 +1,41 @@
+class Solution {
+    void permuteHelper(vector<vector<int> > &result, const vector<int> &nums, vector<int> &solution) {
+        if(solution.size() == nums.size()) {
+            result.push_back(solution);
+            return;
+        }
+        for(int i = 0; i < nums.size(); ++i) {
+            if(isInList(solution, nums[i])) {
+                continue;
+            }
+            solution.push_back(nums[i]);
+            permuteHelper(result, nums, solution);
+            solution.pop_back();
+        }
+    }
+    
+    bool isInList(vector<int> &list, int target ) {
+        for(int i = 0; i < list.size(); ++i) {
+            if(list[i] == target) {
+                return true;
+            }
+        }
+        return false;
+    }
+public:
+    /**
+     * @param nums: A list of integers.
+     * @return: A list of permutations.
+     */
+    vector<vector<int> > permute(vector<int> nums) {
+        // write your code here
+        vector<vector<int> > result;
+        if(nums.size() == 0) {
+            return result;
+        }
+        
+        vector<int> solution;
+        permuteHelper(result, nums, solution);
+        return result;
+    }
+};
