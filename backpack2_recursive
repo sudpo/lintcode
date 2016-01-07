@@ -1,0 +1,35 @@
+class Solution {
+    int backPackHelper(int m, vector<int> &A, vector<int> &V, int i, vector<vector <int>> &rec ) {
+        if(rec[i][m] >= 0){
+            return rec[i][m];
+        }
+        int res;
+        if(i == A.size()){
+            rec[i][m] = 0;
+        }
+        else if (A[i] > m) {
+            rec[i][m] = backPackHelper(m, A, V, i+1, rec);
+        }
+        else {
+            rec[i][m] = max(backPackHelper(m, A, V, i+1, rec), backPackHelper(m-A[i], A, V, i+1, rec) +V[i]);
+        }
+        return rec[i][m];
+    }
+public:
+    /**
+     * @param m: An integer m denotes the size of a backpack
+     * @param A & V: Given n items with size A[i] and value V[i]
+     * @return: The maximum value
+     */
+    int backPackII(int m, vector<int> A, vector<int> V) {
+        // write your code here
+        int n = A.size();
+        if(V.size() != n) {
+            return 0;
+        }
+        
+        vector< vector<int> > rec(n+1, vector<int> (m+1, -1));
+        backPackHelper(m, A, V, 0, rec);
+        return rec[0][m];
+    }
+};
