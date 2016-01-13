@@ -1,0 +1,46 @@
+class Solution {
+public:
+    /**
+     * @param a a number
+     * @param b a number
+     * @return the result
+     */
+    string addBinary(string& a, string& b) {
+        // Write your code here
+        int na = a.size() -1;
+        int nb = b.size() -1;
+        string result;
+        int carry = 0;
+        while(na >= 0 && nb >= 0){
+            int charA = a[na] - '0';
+            int charB = b[nb] - '0';
+            int total = charA + charB + carry;
+            carry = total /2;
+            total = total %2;
+            result.push_back(total + '0');
+            na--;
+            nb--;
+        }
+        while(na >= 0){
+            int charA = a[na] - '0';
+            int total = charA + carry;
+            carry = total /2;
+            total = total %2;
+            result.push_back(total + '0');
+            na--;
+        }
+        while(nb >= 0) {
+            int charB = b[nb] - '0';
+            int total = charB + carry;
+            carry = total /2;
+            total = total %2;
+            result.push_back(total + '0');
+            nb--;
+        }
+        if(carry != 0){
+            result.push_back(carry + '0');
+        }
+        reverse(result.begin(), result.end());
+        return result;
+    }
+};
