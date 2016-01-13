@@ -1,0 +1,54 @@
+class Solution {
+public:
+    /**
+     * @param nums: A list of integers
+     * @return: An integer indicate the value of maximum difference between two
+     *          Subarrays
+     */
+    int maxDiffSubArrays(vector<int> nums) {
+        // write your code here
+        int n = nums.size();
+        if(n == 0) {
+            return 0;
+        }
+        if(n == 1) {
+            return nums[0];
+        }
+        
+        vector<int> lMax(n, 0);
+        vector<int> lMin(n, 0);
+
+        int localMax = nums[0];
+        int localMin = nums[0];
+        lMax[0] = nums[0];
+        lMin[0] = nums[0];
+        for(int i = 1; i < n; ++i) {
+            localMax = max(nums[i], localMax + nums[i]);
+            localMin = min(nums[i], localMin + nums[i]);
+            lMax[i] = max(lMax[i-1], localMax);
+            lMin[i] = min(lMin[i-1], localMin);
+        }
+        
+        localMax = nums[n-1];
+        localMin = nums[n-1];
+        int lastMax = nums[n-1];
+        int lastMin = nums[n-1];
+        int result = INT_MIN;
+        int tempResult = max(abs(lastMax- lMin[n-2]), abs(lastMin -lMax[n-2]));
+        result = max(result, tempResult);
+        
+        for(int i = n -2; i > 0; --i){
+            localMax = max(nums[i], localMax + nums[i]);
+            localMin = min(nums[i], localMin + nums[i]);
+            
+            lastMax = max(lastMax, localMax);
+            lastMin = min(lastMin, localMin);
+            
+            tempResult = max(abs(lastMax - lMin[i-1]), abs(lastMin - lMax[i-1]));
+            result = max(result, tempResult);
+            
+        }
+        return result;
+
+    }
+};
