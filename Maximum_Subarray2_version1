@@ -1,0 +1,37 @@
+//算法思路 利用Maximum Subarray的方法 lMax[i] 中存放到第i个数字时最大的和为多少 然后再倒着算到倒数第j个数的最大和是多少
+
+class Solution {
+public:
+    /**
+     * @param nums: A list of integers
+     * @return: An integer denotes the sum of max two non-overlapping subarrays
+     */
+    int maxTwoSubArrays(vector<int> nums) {
+        // write your code here
+        int n = nums.size();
+        if(n == 0) {
+            return 0;
+        }
+        if(n == 1) {
+            return nums[0];
+        }
+        vector<int> lMax(n, 0);
+        int currMax = nums[0];
+        lMax[0] = nums[0];
+        for(int i = 1; i < n; ++i) {
+            currMax = max(nums[i], nums[i]+currMax);
+            lMax[i] = max(lMax[i-1], currMax);
+        }
+        
+        currMax = nums[n-1];
+        int rMax = nums[n-1];
+        int result = rMax + lMax[n-2];
+        for(int i = n-2; i > 0; --i){
+            currMax = max(nums[i], currMax+nums[i]);
+            rMax = max(rMax, currMax);
+            result = max(result, rMax + lMax[i-1]);
+        }
+        return result;
+        
+    }
+};
