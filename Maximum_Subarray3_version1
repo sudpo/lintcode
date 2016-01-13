@@ -1,0 +1,32 @@
+class Solution {
+public:
+    /**
+     * @param nums: A list of integers
+     * @param k: An integer denote to find k non-overlapping subarrays
+     * @return: An integer denote the sum of max k non-overlapping subarrays
+     */
+    int maxSubArray(vector<int> nums, int k) {
+        // write your code here
+        int n = nums.size();
+        if(n == 0 || n < k) {
+            return 0;
+        }
+        //dp[i][j] 表示在前i个字符中取出j个子字符串能取得的最大值
+        //dp[i][j] = max(dp[m][j-1] + maxSubArray(m+1, i);
+        
+        vector<vector<int> > dp(n+1, vector<int>(k+1, 0));
+        for(int sub = 1; sub <= k; ++sub){
+            for( int i = sub; i <= n; ++i) {
+                int maxSum = INT_MIN;
+                int localMax = 0;
+                dp[i][sub] = INT_MIN;
+                for(int j = i-1; j >= sub-1; j--) {
+                    localMax = max(nums[j], localMax + nums[j]);
+                    maxSum = max(maxSum, localMax);
+                    dp[i][sub] = max(dp[j][sub-1] + maxSum, dp[i][sub]);
+                }
+            }
+        }
+        return dp[n][k];
+    }
+};
