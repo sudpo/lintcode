@@ -1,0 +1,20 @@
+class Solution {
+public:
+    /**
+     * @param s A string
+     * @return the length of last word
+     */
+    int lengthOfLastWord(string& s) {
+        // Write your code here
+        int n = s.size();
+        if(n == 0) {
+            return 0;
+        }
+        int size = 0;
+        while(isalpha(s[n-1]) && n > 0){
+            size++;
+            n--;
+        }
+        return size;
+    }
+};
