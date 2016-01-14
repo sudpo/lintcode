@@ -1,0 +1,19 @@
+class Solution {
+public:
+    /**
+     * @param num: an integer
+     * @return: an integer, the number of ones in num
+     */
+    //每次 num &= num -1 会消掉一个1 
+     
+    int countOnes(int num) {
+        // write your code here
+        int result = 0;
+        for(int i = 0; i < 32; ++i) {
+            if(num & (1 << i)) {
+                result++;
+            }
+        }
+        return result;
+    }
+};
