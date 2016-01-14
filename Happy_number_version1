@@ -1,0 +1,31 @@
+class Solution {
+public:
+    /**
+     * @param n an integer
+     * @return true if this is a happy number or false
+     */
+    bool isHappy(int n) {
+        // Write your code here
+        unordered_set<int> test;
+        if(n == 1) {
+            return true;
+        }
+        else{
+            test.insert(n);
+        }
+        while(n != 1) {
+            int number = n;
+            n = 0;
+            while(number != 0) {
+                n += pow (number % 10, 2 );
+                number = number / 10;
+            }
+
+            if(test.find(n) != test.end()) {
+                return false;
+            }
+            test.insert(n);
+        }
+        return true;
+    }
+};
