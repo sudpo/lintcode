@@ -1,0 +1,61 @@
+/**
+ * Definition of TreeNode:
+ * class TreeNode {
+ * public:
+ *     int val;
+ *     TreeNode *left, *right;
+ *     TreeNode(int val) {
+ *         this->val = val;
+ *         this->left = this->right = NULL;
+ *     }
+ * }
+ */
+class Solution {
+    
+public:
+    /**
+     * @param root the root of the binary tree
+     * @return all root-to-leaf paths
+     */
+     
+    string toString(vector<TreeNode*> &solution) {
+        string result;
+        result.append(to_string(solution[0]->val));
+        for(int i = 1; i < solution.size(); ++i) {
+            result.append("->").append(to_string(solution[i]->val));
+        }
+        return result;
+    }
+    void helper(TreeNode *node, vector<string> &result, vector<TreeNode *> & solution) {
+        if(node == NULL) {
+            return;
+        }
+        if(node->left == NULL && node->right == NULL) {
+            solution.push_back(node);
+            result.push_back(toString(solution));
+            solution.pop_back();
+            return;
+        }
+        if(node->left != NULL) {
+            solution.push_back(node);
+            helper(node->left, result, solution);
+            solution.pop_back();
+        }
+        if(node->right != NULL) {
+            solution.push_back(node);
+            helper(node->right, result, solution);
+            solution.pop_back();
+        }
+    } 
+    vector<string> binaryTreePaths(TreeNode* root) {
+        // Write your code here
+        vector<string> result;
+        vector<TreeNode *> solution;
+        if(root == NULL) {
+            return result;
+        }
+        //solution.push_back(root);
+        helper(root, result, solution);
+        return result;
+    }
+};
