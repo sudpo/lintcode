@@ -1,0 +1,43 @@
+/**
+ * Definition of TreeNode:
+ * class TreeNode {
+ * public:
+ *     int val;
+ *     TreeNode *left, *right;
+ *     TreeNode(int val) {
+ *         this->val = val;
+ *         this->left = this->right = NULL;
+ *     }
+ * }
+ */
+class Solution {
+    TreeNode *flattenTB(TreeNode *root) {
+        if(root == NULL) {
+            return NULL;
+        }
+        TreeNode *leftTail = flattenTB(root->left);
+        TreeNode *rightTail = flattenTB(root->right);
+        if(root->left != NULL) {
+            TreeNode *temp = root->right;
+            root->right = root->left;
+            root->left = NULL;
+            leftTail->right = temp;
+        }
+        if(rightTail) return rightTail;
+        if(leftTail) return leftTail;
+        return root;
+    }
+public:
+    /**
+     * @param root: a TreeNode, the root of the binary tree
+     * @return: nothing
+     */
+    void flatten(TreeNode *root) {
+        // write your code here
+        if(root == NULL) {
+            return;
+        }
+    
+        flattenTB(root);
+    }
+};
