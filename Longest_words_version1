@@ -1,0 +1,23 @@
+class Solution {
+public:
+    /**
+     * @param dictionary: a vector of strings
+     * @return: a vector of strings
+     */
+    vector<string> longestWords(vector<string> &dictionary) {
+        // write your code here
+        vector<string> result;
+        map<int, vector<string> > wordMap;
+        int n = dictionary.size();
+        if(n == 0) {
+            return result;
+        }
+        for(int i = 0; i < n; ++i) {
+            int size = dictionary[i].size();
+            wordMap[size].push_back(dictionary[i]);
+        }
+        map<int, vector<string> >::iterator itr = wordMap.end();
+        itr--;
+        return(itr->second);
+    }
+};
