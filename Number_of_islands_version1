@@ -1,0 +1,45 @@
+class Solution {
+    void dfs(int x, int y, vector<vector<bool> > &grid, int n, int m) {
+        if(grid[x][y] == true) {
+            grid[x][y] = false;
+            if(x+1 < n) {
+                dfs(x+1, y, grid, n, m);
+            }
+            if(x-1 >= 0) {
+                dfs(x-1, y, grid, n, m);
+            }
+            if(y+1 < m) {
+                dfs(x, y+1, grid, n, m);
+            }
+            if(y-1 >= 0) {
+                dfs(x, y-1, grid, n, m);
+            }
+        }
+        return;
+
+    }
+public:
+    /**
+     * @param grid a boolean 2D matrix
+     * @return an integer
+     */
+    int numIslands(vector<vector<bool>>& grid) {
+        // Write your code here
+        int n = grid.size();
+        if(n == 0) {
+            return 0;
+        }
+        int m = grid[0].size(); 
+        int result = 0;
+        for(int i = 0; i < n; ++i) {
+            for(int j = 0; j < m; ++j) {
+                if(grid[i][j] == true) {
+                    result++;
+                    dfs(i,j,grid,n,m);
+                }
+            }
+        }
+        return result;
+        
+    }
+};
