@@ -1,0 +1,22 @@
+class Solution {
+public:
+    /**
+     * @param n the integer to be reversed
+     * @return the reversed integer
+     */
+    int reverseInteger(int n) {
+        // Write your code here
+        int result = 0;
+        while(n != 0) {
+            int next_result = result * 10 + n % 10;
+            n = n / 10;
+            if(next_result /10 != result)
+            {
+                result = 0;
+                break;
+            }
+            result = next_result;
+        }
+        return result;
+    }
+};
