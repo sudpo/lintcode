@@ -1,0 +1,36 @@
+class Solution {
+public:
+    /*
+     * param k : As description.
+     * param n : As description.
+     * return: How many k's between 0 and n.
+     */
+    int digitCounts(int k, int n) {
+        // write your code here
+        int result = 0;
+        for(int i = 0; i <= n; ++i)
+        {
+            result += digitCount(k, i);
+        }
+        if(k == 0) {
+            result++;
+        }
+        return result;
+        
+    }
+    
+    int digitCount(int k, int n)
+    {
+        int count = 0;
+        while(n != 0)
+        {
+            int res = n % 10;
+            if(res == k)
+            {
+                count++;
+            }
+            n = n / 10;
+        }
+        return count;
+    }
+};
