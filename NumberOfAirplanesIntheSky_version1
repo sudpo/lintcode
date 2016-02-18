@@ -1,0 +1,42 @@
+/**
+ * Definition of Interval:
+ * classs Interval {
+ *     int start, end;
+ *     Interval(int start, int end) {
+ *         this->start = start;
+ *         this->end = end;
+ *     }
+ */
+class Solution {
+public:
+    /**
+     * @param intervals: An interval array
+     * @return: Count of airplanes are in the sky.
+     */
+    int countOfAirplanes(vector<Interval> &airplanes) {
+        // write your code here
+        int n = airplanes.size();
+        if(n == 0 || n == 1) {
+            return n;
+        }
+        vector<pair<int, bool> > helper; 
+        for(int i = 0; i < n; ++i) {
+            helper.push_back(pair<int, bool> (airplanes[i].start, true));
+            helper.push_back(pair<int, bool> (airplanes[i].end, false));
+        }
+        sort(helper.begin(), helper.end());
+        int most = 0; 
+        int count = 0;
+        for(int i = 0; i < helper.size(); ++i) {
+            if(helper[i].second == true) {
+                count++;
+            }
+            else {
+                count--;
+            }
+            most = max(most, count);
+        }
+        return most;
+        
+    }
+};
