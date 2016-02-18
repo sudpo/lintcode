@@ -1,3 +1,7 @@
+使用 primes 数组来记录前 k 个ugly_number。在生成 primes 数组时，新增入的元素，肯定是该 primes 数组中前面某些元素乘以3，或是乘以5，或是乘以7的结果，且是最小的。依据此思想，可以构建如下的代码
+
+
+
 class Solution {
 public:
     /*
