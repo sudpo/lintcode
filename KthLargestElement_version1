@@ -1,0 +1,50 @@
+class Solution {
+public:
+    /*
+     * param k : description of k
+     * param nums : description of array and index 0 ~ n-1
+     * return: description of return
+     */
+    int kthLargestElement(int k, vector<int> nums) {
+        // write your code here
+        partition(k, nums, 0, nums.size()-1);
+        return nums[k-1];
+    }
+    
+    void partition(int k, vector<int> &nums, int start, int end) {
+        if(start >= end) {
+            return;
+        }
+        
+        int val = nums[(end-start)/2 + start];
+        
+        int i = start;
+        int j = end;
+        
+        while(i <= j){
+            while(nums[i] > val) {
+                i++;
+            }    
+            while(nums[j] < val) {
+                j--;
+            }
+            if(i <= j) {
+                int temp = nums[i];
+                nums[i] = nums[j];
+                nums[j] = temp;
+                i++;
+                j--;
+            }
+        }
+        
+        if (i == k-1) {
+            return;
+        }
+        else if(i > k-1) {
+            partition(k, nums, start, i-1);
+        }
+        else {
+            partition(k, nums, i, end);
+        }
+    }
+};
