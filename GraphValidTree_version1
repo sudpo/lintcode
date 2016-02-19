@@ -1,0 +1,58 @@
+class Solution {
+public:
+    /**
+     * @param n an integer
+     * @param edges a list of undirected edges
+     * @return true if it's a valid tree, or false
+     */
+     
+    class TreeNode {
+    public:
+        int val;
+        int parent = -1;
+        vector<int>neighbors;
+    };
+    
+    bool validTree(int n, vector<vector<int>>& edges) {
+        // Write your code here
+        if(n-1 != edges.size()) {
+            return false;
+        }
+        else if( n == 1) {
+            return true;
+        } 
+        
+        unordered_map<int, TreeNode> graph;
+        for(int i = 0; i < edges.size(); ++i) {
+            graph[edges[i][0]].neighbors.push_back(edges[i][1]);
+            graph[edges[i][1]].neighbors.push_back(edges[i][0]);
+        }
+        
+        unordered_set<int> visited;
+        queue<int> helper;
+        helper.push(0);
+        visited.insert(0);
+        while(!helper.empty()) {
+            int curr = helper.front();
+            helper.pop();
+            for(int i = 0; i < graph[curr].neighbors.size(); ++i) {
+                int neighbor = graph[curr].neighbors[i];
+                if(neighbor != graph[curr].parent) {
+                    if(visited.find(neighbor) != visited.end()) {
+                        return false;
+                    }
+                    else{
+                        helper.push(neighbor);
+                        visited.insert(neighbor);
+                        graph[neighbor].parent = curr;
+                    }
+                }
+            }
+        }
+        if(visited.size() != n ) {
+            return false;
+        }
+        return true;
+        
+    }
+};
