@@ -1,0 +1,28 @@
+class Solution {
+public:
+    /**
+     * @param str: a string
+     * @param offset: an integer
+     * @return: nothing
+     */
+    void rotateString(string &str,int offset){
+        //wirte your code here
+        int len = str.size();
+        if(len <= 1) {
+            return;
+        }
+        offset = offset % len;
+        while(offset > 0)
+        {
+            rotateStringByOne(str);
+            offset--;
+        }
+    }
+    void rotateStringByOne(string &str){
+        char temp = str[str.size()-1];
+        for(int i = str.size() - 2; i >=0; --i){
+            str[i+1] = str[i];
+        }
+        str[0] = temp;
+    }
+};
