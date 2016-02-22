@@ -1,0 +1,58 @@
+class Solution {
+public:
+    /**
+     * @param s the string that represents a number
+     * @return whether the string is a valid number
+     */
+    bool isNumber(string& s) {
+        // Write your code here
+        bool numFlag = false;
+        bool expFlag = false;
+        bool dotFlag = false;
+        
+        if(s.size() == 0) {
+            return false;
+        }
+        
+        int end = s.size() -1;
+        int start = 0;
+        while(end >= 0 && s[end] == ' ') {
+            end--;
+        }
+        while(start < end && s[start] == ' '){
+            start++;
+        }
+
+        
+        for(int i = start; i <= end; ++i) {
+            if(s[i] == 'e'){
+                if(!numFlag || expFlag) {
+                    return false;
+                }
+                expFlag = true;
+                numFlag = false;
+                
+            }
+            else if(s[i] == '.'){
+                if(expFlag || dotFlag) {
+                    return false;
+                }
+                dotFlag = true;
+            }
+            else if(isdigit(s[i]))
+            {
+                numFlag = true;
+            }
+            else if (s[i] == '+' || s[i] == '-') {
+                if(i !=0 && s[i-1] != 'e'){
+                    return false;
+                }
+            }
+            else{
+                return false;
+            }
+            
+        }
+        return numFlag;
+    }
+};
