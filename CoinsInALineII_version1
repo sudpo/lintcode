@@ -1,0 +1,25 @@
+class Solution {
+public:
+    /**
+     * @param values: a vector of integers
+     * @return: a boolean which equals to true if the first player will win
+     */
+    bool firstWillWin(vector<int> &values) {
+        // write your code here
+        int n = values.size();
+        if(n == 0) {
+            return false;
+        }
+        if(n == 1 || n == 2) {
+            return true;
+        }
+        vector<int> dp(n, 0);
+        //dp[i] 表示从第i个硬币开始拿 能比第二个人多的最大值
+        dp[n-1] = values[n-1];
+        dp[n-2] = values[n-2] + values[n-1];
+        for(int i = n - 3; i >=0; --i) {
+            dp[i] = max(values[i] - dp[i+1], values[i] + values[i+1] - dp[i+2]);
+        }
+        return dp[0] > 0;
+    }
+};
