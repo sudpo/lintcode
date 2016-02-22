@@ -1,0 +1,52 @@
+class Solution {
+public:
+    /**
+     * @param n an integer
+     * @return a square matrix
+     */
+    vector<vector<int>> generateMatrix(int n) {
+        // Write your code here
+        vector<vector<int> > resMatrix(n, vector<int> (n, 0));
+        int top = 0;
+        int bottom = n - 1;
+        int left = 0; 
+        int right = n - 1;
+        
+        int num = 1;
+        int dir = 0;
+        while(top <= bottom && left <= right){
+            if(dir == 0) {
+                for(int i = left; i <= right; ++i) {
+                    resMatrix[top][i] = num;
+                    num++;
+                }
+                top++;
+            }
+            if(dir == 1) {
+                for(int i = top; i <=bottom; ++i) {
+                    resMatrix[i][right] = num;
+                    num++;
+                }
+                right--;
+            }
+            if(dir == 2) {
+                for(int i = right; i >= left; --i) {
+                    resMatrix[bottom][i] = num;
+                    num++;
+                }
+                bottom--;
+            }
+            if(dir == 3) {
+                for(int i = bottom; i >= top; --i) {
+                    resMatrix[i][left] = num;
+                    num++;
+                }
+                left++;
+            }
+            dir = (dir + 1) % 4;
+        }
+        
+        return resMatrix;
+        
+    }
+};
