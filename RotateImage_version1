@@ -1,0 +1,42 @@
+class Solution {
+public:
+    /**
+     * @param matrix: A list of lists of integers
+     * @return: Void
+     */
+    void rotate(vector<vector<int> > &matrix) {
+        // write your code here
+        
+        int n = matrix.size();
+        if(n == 0) {
+            return;
+        }
+        if(matrix[0].size() != n) {
+            return;
+        }
+        
+        //first flip the horizontal lines
+        int start  = 0;
+        int end = n - 1;
+        while(start < end) {
+            for(int i = 0; i < n; ++i) {
+                int temp = matrix[start][i];
+                matrix[start][i] = matrix[end][i];
+                matrix[end][i] = temp;
+            }
+            start++;
+            end--;
+        }
+        
+        //second flip the diagonal lines 
+        
+        for(int i = 0; i < n ; ++i) {
+            for(int j = i+1 ; j < n ; ++j) {
+                int temp = matrix[i][j];
+                matrix[i][j] = matrix[j][i];
+                matrix[j][i] = temp;
+            }
+        }
+        return;
+    }
+};
