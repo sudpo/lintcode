@@ -1,0 +1,44 @@
+//数学解法。
+
+假设有n个元素
+a1, a2, a3, .....   ..., an
+n个元素会有n!种排列组合
+
+那么这里，我们把a1去掉，那么剩下的permutation为
+a2, a3, .... .... an, 共计n-1个元素。 n-1个元素共有(n-1)!组排列
+
+
+
+
+
+
+
+class Solution {
+public:
+    /**
+     * @param A an integer array
+     * @return a long integer
+     */
+    long long permutationIndex(vector<int>& A) {
+        // Write your code here
+        if (A.size() == 0) {
+            return 0;
+        }
+        
+        long long index = 1;
+        int position = 2;
+        long long factor = 1;
+        for(int i = A.size() - 2; i >= 0; --i) {
+            int successors = 0;
+            for(int j = i+1; j <A.size(); ++j){
+                if(A[i] > A[j]){
+                    ++successors;
+                }
+            }
+            index += successors * factor;
+            factor *= position;
+            ++position;
+        }
+        return index;
+    }
+};
