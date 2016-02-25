@@ -1,0 +1,45 @@
+class Solution {
+public:
+    /**
+     * @param digits A digital string
+     * @return all posible letter combinations
+     */
+    vector<string> letterCombinations(string& digits) {
+        // Write your code here
+        vector<string> result;
+        if(digits.size() == 0) {
+            return result;
+        }
+        string solution;
+        map<int, vector<char> > phoneMap;
+        char letter = 'a';
+        for(int i = 2; i <= 9; ++i) {
+            int j = 0;
+            while(j < 3) {
+                phoneMap[i].push_back(letter);
+                letter++;
+                j++;
+            }
+            if(i == 7 || i == 9) {
+                phoneMap[i].push_back(letter);
+                letter++;
+            }
+        }
+        
+        letterComb(digits, 0, solution, result, phoneMap);
+        return result;
+    }
+    
+    void letterComb(string& digits, int start, string &solution, vector<string> &result, map<int, vector<char> > &phoneMap ){
+        if(solution.size() == digits.size()) {
+            result.push_back(solution);
+            return;
+        }
+        int digit = int(digits[start] - '0');
+        for(int i = 0; i < phoneMap[digit].size(); ++i) {
+            solution.push_back(phoneMap[digit][i]);
+            letterComb(digits, start+1, solution, result, phoneMap);
+            solution.pop_back();
+        }
+    }
+};
