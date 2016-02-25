@@ -1,0 +1,36 @@
+class Solution {
+public:
+    /**
+     * @param n n pairs
+     * @return All combinations of well-formed parentheses
+     */
+    vector<string> generateParenthesis(int n) {
+        // Write your code here
+        vector<string> result;
+        if(n == 0) {
+            return result;
+        }
+        string solution;
+        generateHelper(result, solution, n, 0, 0 );
+        return result;
+    }
+    
+    void generateHelper(vector<string> &result, string &solution, int n, int leftN, int rightN) {
+        if(solution.size() == 2 * n ){
+            result.push_back(solution);
+            return;
+        }
+        
+        if(leftN < n) {
+            solution.push_back('(');
+            generateHelper(result, solution, n,leftN+1, rightN);
+            solution.pop_back();
+        }
+        
+        if(rightN < leftN) {
+            solution.push_back(')');
+            generateHelper(result, solution, n, leftN, rightN+1);
+            solution.pop_back();
+        }
+    }
+};
