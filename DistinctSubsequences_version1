@@ -1,0 +1,34 @@
+class Solution {
+public:    
+    /**
+     * @param S, T: Two string.
+     * @return: Count the number of distinct subsequences
+     */
+    int numDistinct(string &S, string &T) {
+        // write your code here
+        const int sizeS = S.size();
+        const int sizeT = T.size();
+    //help[i][j] 表示S的前i个字符和T的前j个字符的结果
+        vector< vector <int> > helper(sizeS + 1, vector<int> (sizeT + 1, 0));
+        for(int i = 0; i <= sizeS; ++i)
+        {
+            helper[i][0] = 1;
+        }
+        for(int i = 1; i <= sizeS; ++i)
+        {
+            for(int j = 1; j<=i && j<=sizeT; ++j )
+            {
+                if(S[i-1] == T[j-1])
+                {
+                    helper[i][j] = helper[i-1][j-1] + helper[i-1][j];
+                }
+                else
+                {
+                    helper[i][j] = helper[i-1][j];
+                }
+            }
+        }
+        return helper[sizeS][sizeT];
+    }
+};
+
