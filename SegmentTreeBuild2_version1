@@ -1,0 +1,49 @@
+/**
+ * Definition of SegmentTreeNode:
+ * class SegmentTreeNode {
+ * public:
+ *     int start, end, max;
+ *     SegmentTreeNode *left, *right;
+ *     SegmentTreeNode(int start, int end, int max) {
+ *         this->start = start;
+ *         this->end = end;
+ *         this->max = max;
+ *         this->left = this->right = NULL;
+ *     }
+ * }
+ */
+class Solution {
+public:
+    /**
+     *@param A: a list of integer
+     *@return: The root of Segment Tree
+     */
+    SegmentTreeNode * build(vector<int>& A) {
+        // write your code here
+        int n = A.size();
+        if(n == 0) {
+            return NULL;
+        }
+        return buildHelper(A, 0, n-1);
+        
+    }
+    SegmentTreeNode *buildHelper(vector<int> &A, int start, int end) {
+        if(start > end) {
+            return NULL; 
+        }
+        
+        int maxNum = A[start];
+        for(int i = start; i <= end; ++i)
+        {
+            maxNum = max(maxNum, A[i]);
+        }
+        
+        SegmentTreeNode *root = new SegmentTreeNode(start, end, maxNum);
+        
+        if(start < end) {
+            root->left = buildHelper(A, start, (start + end) / 2);
+            root->right = buildHelper(A, (start + end) / 2 + 1, end);
+        }
+        return root;
+    }
+};
