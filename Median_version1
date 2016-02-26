@@ -1,0 +1,63 @@
+class Solution {
+public:
+    /**
+     * @param nums: A list of integers.
+     * @return: An integer denotes the middle number of the array.
+     */
+    int median(vector<int> &nums) {
+        // write your code here
+        int n = nums.size();
+        if(n == 0) {
+            return 0;
+        }
+        
+        int mid;
+        if( n % 2 == 0) {
+            mid = n/2-1;
+        }
+        else{
+            mid = n/2;
+        }
+        
+        partition(nums, 0, n-1, mid);
+        return nums[mid];
+    }
+    
+    void partition(vector<int> &nums, int start, int end, int mid){
+        if(start >= end) {
+            return;
+        }
+        
+        int pivot = end;
+        int val = nums[pivot];
+        int i = start;
+        int j = end;
+        while(i < j){
+            while(nums[i] < val){
+                i++;
+            }
+            while(nums[j] >= val){
+                j--;
+            }
+            if(i <= j){
+                int temp = nums[i];
+                nums[i] = nums[j];
+                nums[j] = temp;
+            }
+        }
+        int temp = nums[i];
+        nums[i] = nums[pivot];
+        nums[pivot] = temp;
+    
+        if( i == mid){
+            return;
+        }
+        if( i > mid) {
+            partition(nums, start, i-1, mid);
+        }
+        else if( i < mid) {
+            partition(nums, i + 1, end, mid);
+        }
+        
+    }
+};
