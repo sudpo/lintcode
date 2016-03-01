@@ -1,0 +1,32 @@
+class Solution {
+public:
+    /**
+     * @param A an integer array
+     * @return  A list of integers includes the index of 
+     *          the first number and the index of the last number
+     */
+    vector<int> continuousSubarraySum(vector<int>& A) {
+        // Write your code here
+        vector<int> result(2,0);
+        int n = A.size();
+        if( n <= 1){
+            return result;
+        }
+        
+        int currSum = A[0];
+        int maxSum = currSum; 
+        for(int i = 0, j = 1; j < n; ++j) {
+            if(currSum < 0) {
+                i = j;
+                currSum = 0;
+            }
+            currSum += A[j];
+            if(currSum > maxSum) {
+                maxSum = currSum;
+                result[0] = i;
+                result[1] = j;
+            }
+        }
+        return result;
+    }
+};
