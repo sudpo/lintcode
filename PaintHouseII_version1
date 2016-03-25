@@ -1,0 +1,69 @@
+class Solution {
+public:
+    /**
+     * @param costs n x k cost matrix
+     * @return an integer, the minimum cost to paint all houses
+     */
+    int minCostII(vector<vector<int>>& costs) {
+        // Write your code here
+        int numHouse = costs.size();
+        if(numHouse == 0) {
+            return 0;
+        }
+        int numColor = costs[0].size();
+        if(numColor == 1) {
+            return 0;
+        }
+        vector<vector<int> > dp(numHouse, vector<int> (numColor, INT_MAX));
+        int min = INT_MAX;
+        int secondMin = INT_MAX;
+        int minIndex = -1;
+        int secondMinIndex = -1;
+        for(int i = 0; i < numColor; ++i){
+            dp[0][i] = costs[0][i];
+            if(costs[0][i] < min) {
+                secondMin = min;
+                secondMinIndex = minIndex;
+                min = costs[0][i];
+                minIndex = i;
+            }
+            else if(costs[0][i] < secondMin) {
+                secondMin = costs[0][i];
+                secondMinIndex = i;
+            }
+        }
+        int preMinIndex = minIndex;
+        int preSecondMinIndex = secondMinIndex;
+        
+        for(int i = 1; i < numHouse; ++i) {
+            min = INT_MAX;
+            secondMin = INT_MAX;
+            minIndex = -1;
+            secondMinIndex = -1;
+            for(int j = 0; j < numColor; ++j){
+                if(preMinIndex != j) {
+                    dp[i][j] = dp[i-1][preMinIndex] + costs[i][j];
+                }
+                else {
+                    dp[i][j] = dp[i-1][preSecondMinIndex] + costs[i][j];
+                }
+                if(dp[i][j] < min) {
+                    secondMin = min;
+                    secondMinIndex = minIndex;
+                    min = dp[i][j];
+                    minIndex = j;
+                }
+                else if(dp[i][j] < secondMin) {
+                    secondMin = dp[i][j];
+                    secondMinIndex = j;
+                }
+            }
+            preMinIndex = minIndex;
+            preSecondMinIndex = secondMinIndex;
+            
+        }
+        
+        return dp[numHouse-1][preMinIndex];
+        
+    }
+};
