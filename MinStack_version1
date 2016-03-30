@@ -1,0 +1,40 @@
+class MinStack {
+    stack<pair<int, int> > store;
+public:
+    MinStack() {
+        // do initialization if necessary
+    }
+
+    void push(int number) {
+        // write your code here
+        if(store.empty()) {
+            store.push(make_pair(number,number));
+            return;
+        }
+        
+        if(number < store.top().second) {
+            store.push(make_pair(number, number));
+        }
+        else{
+            store.push(make_pair(number, store.top().second));
+        }
+        
+        
+    }
+
+    int pop() {
+        // write your code here
+        int result = -1;
+        if(!store.empty())
+        {
+            result = store.top().first;
+            store.pop();
+        }
+        return result;
+    }
+
+    int min() {
+        // write your code here
+        return store.top().second;
+    }
+};
